@@ -76,7 +76,7 @@ pyOpenSSL==19.1.0
 pyparsing==2.4.6
 pyqtgraph==0.10.0
 pyRFC3339==1.0
-PySocks==1.7.1
+#PySocks==1.7.1
 python-apt==1.6.5+ubuntu0.4
 python-dateutil==2.8.1
 python-debian==0.1.32
