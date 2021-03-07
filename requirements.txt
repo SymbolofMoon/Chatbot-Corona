@@ -6,7 +6,7 @@ asn1crypto==0.24.0
 async-timeout==3.0.1
 attrs==20.3.0
 beautifulsoup4==4.6.0
-binwalk==2.1.1
+#binwalk==2.1.1
 Brlapi==0.6.6
 bs4==0.0.1
 certifi==2020.4.5.1
