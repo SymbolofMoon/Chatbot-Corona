@@ -65,7 +65,7 @@ psycopg2==2.7.4
 pycairo==1.16.2
 pycparser==2.20
 pycrypto==2.6.1
-pycups==1.9.73
+#pycups==1.9.73
 pygobject==3.26.1
 PyJWT==1.7.1
 pymacaroons==0.13.0
