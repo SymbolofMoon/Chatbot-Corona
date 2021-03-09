@@ -21,18 +21,21 @@ class Api:
         return result.get('cases') , result.get('deaths'),result.get('tests')
 
 
-    def makeApiRequestForIndianStates(self):
-        url = "https://covid19-data.p.rapidapi.com/india"
+    def makeApiRequestForIndianStates(self, states_name):
+        url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india"
+
         headers = {
-            'x-rapidapi-host': "covid19-data.p.rapidapi.com",
-            'x-rapidapi-key': "455ca3453dmshb8986f5a379f1dap136e13jsn59e42c7243d8"
-        }
+            'x-rapidapi-key': "455ca3453dmshb8986f5a379f1dap136e13jsn59e42c7243d8",
+            'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com"
+            }
+        querystring=states_name    
         response = requests.request("GET", url, headers=headers)
         # print(response.text)
         js = json.loads(response.text)
         print("******", js)
+        query=js.get('state_wise').get(querystring)
         #result = js.get('list')
-        return js
+        return query
 
 
     def makeApiWorldwide(self):

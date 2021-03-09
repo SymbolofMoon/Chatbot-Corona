@@ -80,6 +80,9 @@ def processRequest(req):
                 }
             ]
         }
+
+
+        
     elif intent == "Welcome" or intent == "continue_conversation" or intent == "not_send_email" or intent == "endConversation" or intent == "Fallback" or intent == "covid_faq" or intent == "select_country_option" or intent=="covid_searchstate":
         fulfillmentText = result.get("fulfillmentText")
         log.saveConversations(sessionID, query_text, fulfillmentText, intent, db)
@@ -104,6 +107,45 @@ def processRequest(req):
         print(webhookresponse)
         log.saveConversations(sessionID, "Cases worldwide", webhookresponse, intent, db)
         #log.saveCases("world", fulfillmentText, db)
+
+        return {
+
+            "fulfillmentMessages": [
+                {
+                    "text": {
+                        "text": [
+                            webhookresponse
+                        ]
+
+                    }
+                },
+                {
+                    "text": {
+                        "text": [
+                            "Do you want me to send the detailed report to your e-mail address? Type.. \n 1. Sure \n 2. Not now "
+                            # "We have sent the detailed report of {} Covid-19 to your given mail address.Do you have any other Query?".format(cust_country)
+                        ]
+
+                    }
+                }
+            ]
+        }
+
+    elif intent=="covid_search_state":
+        cust_state=parameters.get("geo-state")    
+
+        fulfillmentTexta = makeAPIRequestStates(cust_state)
+        webhookresponse = "***Covid Report*** \n\n"  + " Active cases : " + str(
+            fulfillmentText.get('active')) + "\n" + " Confirmed cases : " + str(fulfillmentText.get('confirmed')) + \
+                          "\n" + " Recovered cases : " + str(
+            fulfillmentText.get('recovered')) + "\n"  + \
+                          "\n" + " Total Deaths : " + str(fulfillmentText.get('deaths')) + "\n" + " New Deaths : " + str(
+            fulfillmentText.get('deltadeaths')) + \
+                          "\n" + " New Confirmed Cases : " + str(fulfillmentText.get('deltaconfirmed')) + \
+                          "\n" + " New Recovered : " + str(fulfillmentText.get('deltarecovered'))+"\n\n*******END********* \n "
+        print(webhookresponse)
+        log.saveConversations(sessionID, cust_state, webhookresponse, intent, db)
+        log.saveCases( "state", fulfillmentText, db)
 
         return {
 
@@ -235,11 +277,21 @@ def makeAPIRequest(query):
 
     if query == "world":
         return api.makeApiWorldwide()
-    if query == "state":
-        return api.makeApiRequestForIndianStates()
+    # if query == "state":
+    #     return api.makeApiRequestForIndianStates()
 
     else:
         return api.makeApiRequestForCounrty(query)
+
+def makeAPIRequestStates(query):
+
+    api= MakeApiRequests.Api()
+
+    if query == "null":
+        return query       
+
+    else:
+        return api.makeApiRequestForIndianStates(query)    
 
 
 def prepareEmail(contact_list):
