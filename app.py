@@ -135,7 +135,7 @@ def processRequest(req):
         cust_state=parameters.get("geo-state")   
         cust_state=str(cust_state) 
 
-        fulfillmentTexta = makeAPIRequestStates(cust_state)
+        fulfillmentText = makeAPIRequestStates(cust_state)
         webhookresponse = "***Covid Report*** \n\n"  + " Active cases : " + str(
             fulfillmentText.get('active')) + "\n" + " Confirmed cases : " + str(fulfillmentText.get('confirmed')) + \
                           "\n" + " Recovered cases : " + str(
