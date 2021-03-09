@@ -80,7 +80,7 @@ def processRequest(req):
                 }
             ]
         }
-    elif intent == "Welcome" or intent == "continue_conversation" or intent == "not_send_email" or intent == "endConversation" or intent == "Fallback" or intent == "covid_faq" or intent == "select_country_option":
+    elif intent == "Welcome" or intent == "continue_conversation" or intent == "not_send_email" or intent == "endConversation" or intent == "Fallback" or intent == "covid_faq" or intent == "select_country_option" or intent=="covid_searchstate":
         fulfillmentText = result.get("fulfillmentText")
         log.saveConversations(sessionID, query_text, fulfillmentText, intent, db)
     elif intent == "send_report_to_email":
@@ -128,95 +128,95 @@ def processRequest(req):
             ]
         }
 
-    elif intent == "covid_searchstate":
+    # elif intent == "covid_searchstate":
 
-        fulfillmentText = makeAPIRequest("state")
-        print(len(fulfillmentText))
+    #     fulfillmentText = makeAPIRequest("state")
+    #     print(len(fulfillmentText))
 
-        webhookresponse1 = ''
-        webhookresponse2 = ''
-        webhookresponse3 = ''
-        for i in range(0,11):
-            webhookresponse = fulfillmentText[i]
-            # print(webhookresponse['state'])
-            # js = json.loads(webhookresponse.text)
+    #     webhookresponse1 = ''
+    #     webhookresponse2 = ''
+    #     webhookresponse3 = ''
+    #     for i in range(0,11):
+    #         webhookresponse = fulfillmentText[i]
+    #         # print(webhookresponse['state'])
+    #         # js = json.loads(webhookresponse.text)
 
-            # print(str(js.state))
-            webhookresponse1 += "*********\n" + " State :" + str(webhookresponse['state']) + \
-                                "\n" + " Confirmed cases : " + str(
-                webhookresponse['confirmed']) + "\n" + " Death cases : " + str(webhookresponse['deaths']) + \
-                                "\n" + " Active cases : " + str(
-                webhookresponse['active']) + "\n" + " Recovered cases : " + str(
-                webhookresponse['recovered']) + "\n*********"
-        for i in range(11, 21):
-            webhookresponse = fulfillmentText[i]
-            # print(webhookresponse['state'])
-            # js = json.loads(webhookresponse.text)
+    #         # print(str(js.state))
+    #         webhookresponse1 += "*********\n" + " State :" + str(webhookresponse['state']) + \
+    #                             "\n" + " Confirmed cases : " + str(
+    #             webhookresponse['confirmed']) + "\n" + " Death cases : " + str(webhookresponse['deaths']) + \
+    #                             "\n" + " Active cases : " + str(
+    #             webhookresponse['active']) + "\n" + " Recovered cases : " + str(
+    #             webhookresponse['recovered']) + "\n*********"
+    #     for i in range(11, 21):
+    #         webhookresponse = fulfillmentText[i]
+    #         # print(webhookresponse['state'])
+    #         # js = json.loads(webhookresponse.text)
 
-            # print(str(js.state))
-            webhookresponse2 += "*********\n" + " State :" + str(webhookresponse['state']) + \
-                                "\n" + " Confirmed cases : " + str(
-                webhookresponse['confirmed']) + "\n" + " Death cases : " + str(webhookresponse['deaths']) + \
-                                "\n" + " Active cases : " + str(
-                webhookresponse['active']) + "\n" + " Recovered cases : " + str(
-                webhookresponse['recovered']) + "\n*********"
-        for i in range(21, 38):
-            webhookresponse = fulfillmentText[i]
-            # print(webhookresponse['state'])
-            # js = json.loads(webhookresponse.text)
+    #         # print(str(js.state))
+    #         webhookresponse2 += "*********\n" + " State :" + str(webhookresponse['state']) + \
+    #                             "\n" + " Confirmed cases : " + str(
+    #             webhookresponse['confirmed']) + "\n" + " Death cases : " + str(webhookresponse['deaths']) + \
+    #                             "\n" + " Active cases : " + str(
+    #             webhookresponse['active']) + "\n" + " Recovered cases : " + str(
+    #             webhookresponse['recovered']) + "\n*********"
+    #     for i in range(21, 38):
+    #         webhookresponse = fulfillmentText[i]
+    #         # print(webhookresponse['state'])
+    #         # js = json.loads(webhookresponse.text)
 
-            # print(str(js.state))
-            webhookresponse3 += "*********\n" + " State :" + str(webhookresponse['state']) + \
-                                "\n" + " Confirmed cases : " + str(
-                webhookresponse['confirmed']) + "\n" + " Death cases : " + str(webhookresponse['deaths']) + \
-                                "\n" + " Active cases : " + str(
-                webhookresponse['active']) + "\n" + " Recovered cases : " + str(
-                webhookresponse['recovered']) + "\n*********"
-        print("***World wide Report*** \n\n" + webhookresponse1 + "\n\n*******END********* \n")
-        print("***World wide Report*** \n\n" + webhookresponse2 + "\n\n*******END********* \n")
-        print("***World wide Report*** \n\n" + webhookresponse3 + "\n\n*******END********* \n")
+    #         # print(str(js.state))
+    #         webhookresponse3 += "*********\n" + " State :" + str(webhookresponse['state']) + \
+    #                             "\n" + " Confirmed cases : " + str(
+    #             webhookresponse['confirmed']) + "\n" + " Death cases : " + str(webhookresponse['deaths']) + \
+    #                             "\n" + " Active cases : " + str(
+    #             webhookresponse['active']) + "\n" + " Recovered cases : " + str(
+    #             webhookresponse['recovered']) + "\n*********"
+    #     print("***World wide Report*** \n\n" + webhookresponse1 + "\n\n*******END********* \n")
+    #     print("***World wide Report*** \n\n" + webhookresponse2 + "\n\n*******END********* \n")
+    #     print("***World wide Report*** \n\n" + webhookresponse3 + "\n\n*******END********* \n")
 
 
 
-        log.saveConversations(sessionID, "Indian State Cases", webhookresponse1, intent, db)
-        return {
+    #     log.saveConversations(sessionID, "Indian State Cases", webhookresponse1, intent, db)
+    #     return {
 
-            "fulfillmentMessages": [
-                {
-                    "text": {
-                        "text": [
-                            webhookresponse1
-                        ]
+    #         "fulfillmentMessages": [
+    #             {
+    #                 "text": {
+    #                     "text": [
+    #                         webhookresponse1
+    #                     ]
 
-                    }
-                },
-                {
-                    "text": {
-                        "text": [
-                            webhookresponse2
-                        ]
+    #                 }
+    #             },
+    #             {
+    #                 "text": {
+    #                     "text": [
+    #                         webhookresponse2
+    #                     ]
 
-                    }
-                },
-                {
-                    "text": {
-                        "text": [
-                            webhookresponse3
-                        ]
+    #                 }
+    #             },
+    #             {
+    #                 "text": {
+    #                     "text": [
+    #                         webhookresponse3
+    #                     ]
 
-                    }
-                },
-                {
-                    "text": {
-                        "text": [
-                            "Do you want me to send the detailed report to your e-mail address? Type.. \n 1. Sure \n 2. Not now "
-                            # "We have sent the detailed report of {} Covid-19 to your given mail address.Do you have any other Query?".format(cust_country)
-                        ]
+    #                 }
+    #             },
+    #             {
+    #                 "text": {
+    #                     "text": [
+    #                         "Do you want me to send the detailed report to your e-mail address? Type.. \n 1. Sure \n 2. Not now "
+    #                         # "We have sent the detailed report of {} Covid-19 to your given mail address.Do you have any other Query?".format(cust_country)
+    #                     ]
 
-                    }
-                }
-            ]
-        }
+    #                 }
+    #             }
+    #         ]
+    #     }
 
 
     else:
