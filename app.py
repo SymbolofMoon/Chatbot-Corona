@@ -132,7 +132,8 @@ def processRequest(req):
         }
 
     elif intent=="covid_search_state":
-        cust_state=parameters.get("geo-state")    
+        cust_state=parameters.get("geo-state")   
+        cust_state=str(cust_state) 
 
         fulfillmentTexta = makeAPIRequestStates(cust_state)
         webhookresponse = "***Covid Report*** \n\n"  + " Active cases : " + str(
